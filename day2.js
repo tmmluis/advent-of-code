@@ -5,31 +5,57 @@ fs.readFile('day2.txt' , (err, data) => {
         throw err
     }
 
-    const dataArray = data.toString().split(',').map(value => Number(value))
+    const inputData = data.toString().split(',').map(value => Number(value))
 
-    // restore the gravity assist program to the "1202 program alarm"
-    dataArray[1] = 12
-    dataArray[2] = 2
+    // Part 1
+    const intcodePart1 = [...inputData]
+    intcodePart1[1] = 12
+    intcodePart1[2] = 2
+    console.log('Part 1 answer: ' + runIntcode(intcodePart1, 0))
 
-    intcode(dataArray, 0)
-    console.log(dataArray[0])
+    // Part 2
+    const inputs = gravityAssist(inputData)
+    const answerPart2 = 100 * inputs.noun + inputs.verb
+    console.log('Part 2 answer: ' + answerPart2)
+    
 })
 
-function intcode (array, startIndex) {
-    //console.log(`reading operation at index: ${startIndex} with value: ${array[startIndex]}`)
-    if (array[startIndex] === 99 || startIndex > array.length - 4) {
+function gravityAssist(intcode) {
+    for (let noun = 0; noun < 100; noun++) {
+        for (let verb = 0; verb < 100; verb++) {
+            let tempIntcode = [...intcode]
+            tempIntcode[1] = noun
+            tempIntcode[2] = verb
+
+            let output = runIntcode(tempIntcode, 0)
+
+            if (output === 19690720) {
+                return {
+                    noun,
+                    verb
+                }
+            }
+        }
+    }
+}
+
+function runIntcode (intcode, startIndex) {
+    //console.log(`reading operation at index: ${startIndex} with value: ${intcode[startIndex]}`)
+    if (intcode[startIndex] === 99 || startIndex > intcode.length - 4) {
         return
     }
 
-    const first = array[startIndex + 1]
-    const second = array[startIndex + 2]
-    const destination = array[startIndex + 3]
+    const first = intcode[startIndex + 1]
+    const second = intcode[startIndex + 2]
+    const destination = intcode[startIndex + 3]
 
-    if (array[startIndex] == 1) {
-        array[destination] = array[first] + array[second]
-        intcode(array, startIndex + 4)
+    if (intcode[startIndex] == 1) {
+        intcode[destination] = intcode[first] + intcode[second]
+        runIntcode(intcode, startIndex + 4)
     } else {
-        array[destination] = array[first] * array[second]
-        intcode(array, startIndex + 4)
+        intcode[destination] = intcode[first] * intcode[second]
+        runIntcode(intcode, startIndex + 4)
     }
+
+    return intcode[0]
 }

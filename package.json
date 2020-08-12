@@ -16,5 +16,7 @@
     "url": "https://github.com/tmmluis/advent-of-code/issues"
   },
   "homepage": "https://github.com/tmmluis/advent-of-code#readme",
-  "dependencies": {}
+  "dependencies": {
+    "lodash": "^4.17.19"
+  }
 }

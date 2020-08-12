@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-fs.readFile('input.txt' , (err, data) => {
+fs.readFile('input.txt', (err, data) => {
     if (err) {
         throw err
     }
@@ -17,7 +17,7 @@ fs.readFile('input.txt' , (err, data) => {
     const inputs = gravityAssist(inputData)
     const answerPart2 = 100 * inputs.noun + inputs.verb
     console.log('Part 2 answer: ' + answerPart2)
-    
+
 })
 
 function gravityAssist(intcode) {
@@ -39,7 +39,7 @@ function gravityAssist(intcode) {
     }
 }
 
-function runIntcode (intcode, startIndex) {
+function runIntcode(intcode, startIndex) {
     //console.log(`reading operation at index: ${startIndex} with value: ${intcode[startIndex]}`)
     if (intcode[startIndex] === 99 || startIndex > intcode.length - 4) {
         return

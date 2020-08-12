@@ -2,7 +2,7 @@ const fs = require('fs');
 
 const inputFile = process.argv[2]
 
-fs.readFile(inputFile , (err, data) => {
+fs.readFile(inputFile, (err, data) => {
     if (err) {
         throw err
     }
@@ -11,7 +11,7 @@ fs.readFile(inputFile , (err, data) => {
 
     const wire1Path = computeCoordinates(parsedData[0].split(','))
     const wire2Path = computeCoordinates(parsedData[1].split(','))
-    
+
     const intersections = intersection(wire1Path, wire2Path)
 
     console.log(closestIntersection(intersections), shortestIntersection(intersections))
@@ -24,7 +24,7 @@ function shortestIntersection(intersections) {
     intersections.forEach((coordinate) => {
         let steps = coordinate.steps1 + coordinate.steps2
 
-        if(steps < shortestIntersection && steps > 0) {
+        if (steps < shortestIntersection && steps > 0) {
             shortestIntersection = steps
         }
     })
@@ -49,15 +49,15 @@ function closestIntersection(intersections) {
 function intersection(array1, array2) {
     const obj = {}
     const intersections = []
-    
+
     array1.forEach((coordinate) => {
         let key = 'x:' + coordinate.x + 'y:' + coordinate.y
- 
+
         if (!obj[key]) {
             obj[key] = coordinate;
         }
     })
-    
+
     array2.forEach((coordinate) => {
         let key = 'x:' + coordinate.x + 'y:' + coordinate.y
 

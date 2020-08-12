@@ -1,12 +1,12 @@
 const fs = require('fs');
 
-fs.readFile('input.txt' , (err, data) => {
+fs.readFile('input.txt', (err, data) => {
     if (err) {
         throw err
     }
-    
+
     const modulesMass = data.toString().split('\n').map(value => Number(value))
-    
+
     const part1Answer = modulesMass.reduce((accumulator, currentValue) => accumulator + computeFuel(currentValue), 0)
     console.log(part1Answer)
 
